@@ -31,7 +31,7 @@ function renderUsers(users) {
         userCard.classList.add("user-card");
         const clearBtn = document.createElement("img");
         clearBtn.classList.add("clear-button");
-        clearBtn.src = "/trashbin.png";
+        clearBtn.src = "/img/trashbin.png";
         userCard.innerHTML = `
         <p>Name: ${usr.name} </p>  <p>Age: ${usr.age}</p> `;
         container.append(userCard);
@@ -86,7 +86,7 @@ async function postUsers(name, age) {
 button.addEventListener('click', () =>{
     const name = document.querySelector("#name").value;
     const age = document.querySelector("#age").value;
-    postUsers(name,age)
+    postUsers(name,age);
 })
 
 
