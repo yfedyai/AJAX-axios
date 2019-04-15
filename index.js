@@ -1,0 +1,92 @@
+const container = document.querySelector(".container");
+const URL = "https://test-users-api.herokuapp.com/users/";
+const button = document.querySelector("#create-user")
+
+
+
+async function getUsers() {
+    try {
+        const user = await axios.get(URL);
+        if (user.status == 200) {
+
+            console.log(user)
+            renderUsers(user.data.data);
+        }
+        else {
+            throw new Error();
+        }
+    }
+    catch (err) {
+        console.log("cannot get users", err);
+    }
+}
+getUsers()
+
+
+
+function renderUsers(users) {
+
+    users.forEach(usr => {
+        const userCard = document.createElement("div");
+        userCard.classList.add("user-card");
+        const clearBtn = document.createElement("img");
+        clearBtn.classList.add("clear-button");
+        clearBtn.src = "/trashbin.png";
+        userCard.innerHTML = `
+        <p>Name: ${usr.name} </p>  <p>Age: ${usr.age}</p> `;
+        container.append(userCard);
+        userCard.append(clearBtn);
+
+        clearBtn.addEventListener('click', () => { deleteUsers(usr.id, userCard) })
+    })
+}
+
+
+
+async function deleteUsers(userid, block) {
+    try {
+
+        const userDel = await axios.delete(URL + `${userid}`)
+        if (userDel.status == 200) {
+            block.remove();
+            console.log(userDel);
+        }
+        else throw new Error;
+    }
+    catch (err) {
+        console.log("cannot delete users", err);
+    }
+}
+
+
+
+
+
+
+
+async function postUsers(name, age) {
+    const userPost = await axios.post(URL, {name,age});
+    try {
+        
+        if (userPost.status == 200) {
+            
+            renderUsers([{name,age}]);
+            console.log(userPost);
+        }
+        else {
+            throw new Error
+        }
+    }
+    catch (err) {
+        console.log('cannot post', err);
+    }
+}
+
+
+button.addEventListener('click', () =>{
+    const name = document.querySelector("#name").value;
+    const age = document.querySelector("#age").value;
+    postUsers(name,age)
+})
+
+
