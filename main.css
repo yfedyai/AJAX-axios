@@ -15,7 +15,7 @@ form {
     display: flex;
     flex-direction: column;
     height: 100%;
-    
+    padding: 10px;
     /* align-items: center */
 }
 
@@ -38,6 +38,7 @@ form {
 }
 
 .clear-button{
+    color:#666;
     position: absolute;
     top: 20px;
     right: 10px;

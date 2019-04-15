@@ -36,7 +36,6 @@ function renderUsers(users) {
         <p>Name: ${usr.name} </p>  <p>Age: ${usr.age}</p> `;
         container.append(userCard);
         userCard.append(clearBtn);
-
         clearBtn.addEventListener('click', () => { deleteUsers(usr.id, userCard) })
     })
 }
@@ -45,8 +44,7 @@ function renderUsers(users) {
 
 async function deleteUsers(userid, block) {
     try {
-
-        const userDel = await axios.delete(URL + `${userid}`)
+       const userDel = await axios.delete(URL + `${userid}`)
         if (userDel.status == 200) {
             block.remove();
             console.log(userDel);
@@ -65,12 +63,10 @@ async function deleteUsers(userid, block) {
 
 
 async function postUsers(name, age) {
-    const userPost = await axios.post(URL, {name,age});
+    const userPost = await axios.post(URL, { name, age });
     try {
-        
         if (userPost.status == 200) {
-            
-            renderUsers([{name,age}]);
+            renderUsers([{ name, age }]);
             console.log(userPost);
         }
         else {
@@ -83,10 +79,10 @@ async function postUsers(name, age) {
 }
 
 
-button.addEventListener('click', () =>{
+button.addEventListener('click', () => {
     const name = document.querySelector("#name").value;
     const age = document.querySelector("#age").value;
-    postUsers(name,age);
-})
+    postUsers(name, age);
+});
 
 
