@@ -1,14 +1,11 @@
 const container = document.querySelector(".container");
 const URL = "https://test-users-api.herokuapp.com/users/";
-const button = document.querySelector("#create-user")
-
-
+const button = document.querySelector("#create-user");
 
 async function getUsers() {
     try {
         const user = await axios.get(URL);
         if (user.status == 200) {
-
             console.log(user)
             renderUsers(user.data.data);
         }
@@ -22,10 +19,7 @@ async function getUsers() {
 }
 getUsers()
 
-
-
 function renderUsers(users) {
-
     users.forEach(usr => {
         const userCard = document.createElement("div");
         userCard.classList.add("user-card");
@@ -40,11 +34,9 @@ function renderUsers(users) {
     })
 }
 
-
-
 async function deleteUsers(userid, block) {
     try {
-       const userDel = await axios.delete(URL + `${userid}`)
+        const userDel = await axios.delete(URL + `${userid}`)
         if (userDel.status == 200) {
             block.remove();
             console.log(userDel);
@@ -55,12 +47,6 @@ async function deleteUsers(userid, block) {
         console.log("cannot delete users", err);
     }
 }
-
-
-
-
-
-
 
 async function postUsers(name, age) {
     const userPost = await axios.post(URL, { name, age });
@@ -78,11 +64,22 @@ async function postUsers(name, age) {
     }
 }
 
-
 button.addEventListener('click', () => {
-    const name = document.querySelector("#name").value;
-    const age = document.querySelector("#age").value;
-    postUsers(name, age);
+    const name = document.querySelector("#name");
+    const age = document.querySelector("#age");
+    let textMessage = "";
+    
+    if (isNaN(age.value) || age.value < 0 || name.value.length === 0 || age.value.length === 0 || Number(age.value) != parseInt(age.value, 10)) {
+        textMessage = "Input must not be empty, age must be positive and integer number";
+        document.querySelector("#message").innerHTML = textMessage;
+        throw new Error(textMessage);     
+    }
+    else {
+        textMessage="";
+        document.querySelector("#message").innerHTML = textMessage;
+        postUsers(name.value, age.value)
+    }
+    
 });
 
 
