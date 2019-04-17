@@ -48,7 +48,7 @@ async function deleteUsers(userid, block) {
     }
 }
 
-async function postUsers(name, age) {
+async function createUser(name, age) {
     const userPost = await axios.post(URL, { name, age });
     try {
         if (userPost.status == 200) {
@@ -68,16 +68,16 @@ button.addEventListener('click', () => {
     const name = document.querySelector("#name");
     const age = document.querySelector("#age");
     let textMessage = "";
-    
+
     if (isNaN(age.value) || age.value < 0 || name.value.length === 0 || age.value.length === 0 || Number(age.value) != parseInt(age.value, 10)) {
         textMessage = "Input must not be empty, age must be positive and integer number";
         document.querySelector("#message").innerHTML = textMessage;
-        throw new Error(textMessage);     
+          
     }
     else {
         textMessage="";
         document.querySelector("#message").innerHTML = textMessage;
-        postUsers(name.value, age.value)
+        createUser(name.value, age.value);
     }
     
 });
